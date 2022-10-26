@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# lecture/tutorial
+/Lecture
+
 # testing
 /coverage
 

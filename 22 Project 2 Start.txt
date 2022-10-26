@@ -1,8 +1,0 @@
-How to create a new app?
-    1   -   open the folder in which you want to create the app.
-    2   -   open power shell
-            -   Shift + Right Click     --->    from the context menu select (Open Power shell window here)
-            -- Note if we not click/hold shift (Open Power shell window here) will not be shown in context menu.
-    3   -   in power shell type npx create-react-app [app_name] 
-    4   - hit enter
-            -- your project will be created.
