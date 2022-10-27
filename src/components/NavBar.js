@@ -41,7 +41,7 @@ export class NavBar extends Component {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/">
-                    Link
+                    News
                   </a>
                 </li>
               </ul>
