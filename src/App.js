@@ -1,9 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
+import React, { Component } from 'react'
+import NavBar from './components/NavBar';
+
+export default class App extends Component {
+  c = "Hello"
+  render() {
+    return (
+      <div className="App">
+        <NavBar/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -17,9 +23,11 @@ function App() {
         >
           Learn React
         </a>
+        <div>
+          {this.c}
+        </div>
       </header>
     </div>
-  );
+    )
+  }
 }
-
-export default App;
