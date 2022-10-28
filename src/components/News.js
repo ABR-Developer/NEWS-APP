@@ -1658,36 +1658,84 @@ export default class News extends Component {
         "Duolingo Math es la aspiración de Duolingo de ir más allá del aprendizaje de idiomas y la alfabetización, tratando de ofrecer un método de aprendizaje ameno y divertido similar al aprendizaje de idio… [+2049 chars]",
     },
   ];
+  
+  pageSize = 6;
+  
   constructor() {
     super();
     this.state = {
       articles: this.articles,
       loading: false,
+      page: 1,
+      numberOfArticles : 0
     };
   }
-  
-  async componentDidMount(){
-    let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=1f5c7b38f34447f4a11b972787f93af8";
+
+  async componentDidMount() {
+    let url =
+      `https://newsapi.org/v2/top-headlines?country=us&apiKey=1f5c7b38f34447f4a11b972787f93af8&pageSize=${this.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({articles : parsedData.articles});
+    this.setState({ articles: parsedData.articles ,numberOfArticles : parsedData.totalResults});
   }
 
-  render() {
+  handlerPreviousClick = async () => {
+    let url =
+      `https://newsapi.org/v2/top-headlines?country=us&apiKey=1f5c7b38f34447f4a11b972787f93af8&pageSize=${this.pageSize}&page=${this.state.page}`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({ articles: parsedData.articles, page: this.state.page - 1 });
+  };
+  handlerNextClick = async () => {
+    if( this.state.page + 1 <= Math.ceil(this.state.totalResults/this.pageSize) ){
+        let url =
+        `https://newsapi.org/v2/top-headlines?country=us&apiKey=1f5c7b38f34447f4a11b972787f93af8&pageSize=${this.pageSize}&page=${this.state.page}`;
+        let data = await fetch(url);
+        let parsedData = await data.json();
+        this.setState({ articles: parsedData.articles, page: this.state.page + 1 });
+      }
+    }
+
+    render() {
     return (
       <div className="container my-3">
         <h2>News Component</h2>
         <div className="row content-evenly">
           {this.state.articles.map((element) => {
-            return <div className="col-md-4 my-5" key={element.url}>
-              <NewsItem
-                title={element.title}
-                description={element.description}
-                imageUrl={element.urlToImage}
-                newsUrl={element.url}
-              />
-            </div>;
+            return (
+              <div className="col-md-4 my-5" key={element.url}>
+                <NewsItem
+                  title={element.title}
+                  description={element.description}
+                  imageUrl={
+                    element.urlToImage === null
+                      ? "logo.svg"
+                      : element.urlToImage
+                  }
+                  newsUrl={element.url}
+                />
+              </div>
+            );
           })}
+        </div>
+        <div className="container d-flex justify-content-around">
+          <div>
+            <button
+              className="btn btn-primary"
+              disabled={this.state.page <= 1}
+              onClick={this.handlerPreviousClick}
+            >
+              &larr; Previous
+            </button>
+          </div>
+          <div>
+            <button
+              className="btn btn-primary"
+              onClick={this.handlerNextClick}
+            >
+              Next &rarr;
+            </button>
+          </div>
         </div>
       </div>
     );
