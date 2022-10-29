@@ -6,12 +6,11 @@ import NavBar from './components/NavBar';
 import News from './components/News';
 
 export default class App extends Component {
-  c = "Hello"
   render() {
     return (
       <div className="App">
         <NavBar/>
-        <News/>
+        <News pageSize={6}/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -25,9 +24,6 @@ export default class App extends Component {
         >
           Learn React
         </a>
-        <div>
-          {this.c}
-        </div>
       </header>
     </div>
     )
